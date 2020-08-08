@@ -7,14 +7,20 @@
 <div id="output"></div>
 <button onclick="getLocalStream()">Get Media</button>
 <button onclick="register()">Register</button>
-<button onclick="echoTest()">EchoTest</button>
-<button>Make call</button>
-<button>Join</button>
+<button onclick="echotest()">EchoTest</button>
+<button onclick="startrtc()">StartRTC</button>
+<button onclick="makecall()">Make call</button>
 <video id="stream" autoplay controls>Your browser does not support video</video> 
 <script>
 var payloadregister = {
-	peerId: "client1"
-}
+	    peerId: "client1"
+    }
+
+var websocketConnection; 
+var webrtcPeerConnection; 
+var webrtcConfiguration; 
+var media;
+var reportError; 
 
 var output = document.getElementById("output");
 var print = function(message) {
@@ -27,9 +33,14 @@ function register() {
     ws = new WebSocket("ws://203.153.53.181:51000/ws");
     ws.onopen = function(evt) {
     print("Connection is established \n");
-    ws.send(JSON.stringify(payload))
+    ws.send(JSON.stringify(payloadregister))
     }
 }
+
+function icecandidate() {
+    
+}
+
 
 function echoTest() {
     var payloadechotest = {
@@ -41,11 +52,46 @@ function echoTest() {
 
 }
 
+function startrtc() {
+    webrtcConfiguration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] ,'bundlePolicy': 'max-bundle'};
+    webrtcPeerConnection = new RTCPeerConnection(webrtcConfiguration);
+    webrtcPeerConnection.onicecandidate = function(event) {
+        console.log("onicecandidate")
+        console.log(event)
+    }
+
+    webrtcPeerConnection.onaddstream = function(event) {
+        console.log("onaddstream")
+        console.log(event)
+    }
+
+    webrtcPeerConnection.onremovestream = function(event) {
+        console.log("onremovestream")
+        console.log(event)
+    }
+
+    webrtcPeerConnection.addStream(media);
+
+
+}
+
+function makecall() {
+    webrtcPeerConnection.createOffer(
+        fubnction (sessionDescription) {
+        console.log("Setting session discription");
+        console.log(sessionDescription);
+        },
+        function(err) {
+            console.log(err)
+        }
+    )
+}
+
 function getLocalStream() { 
     var vidstream = document.getElementById("stream");
          var constraints = {"video":true,"audio":true};
 
-  var media = navigator.mediaDevices.getUserMedia(constraints); 
+  media = navigator.mediaDevices.getUserMedia(constraints); 
   console.log(media);
 
   //var tracks = media.getTracks();
