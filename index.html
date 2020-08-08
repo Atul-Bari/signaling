@@ -7,14 +7,15 @@
 <div id="output"></div>
 <button onclick="getLocalStream()">Get Media</button>
 <button onclick="register()">Register</button>
-<button>EchoTest</button>
+<button onclick="echoTest()">EchoTest</button>
 <button>Make call</button>
 <button>Join</button>
 <video id="stream" autoplay controls>Your browser does not support video</video> 
 <script>
 var payloadregister = {
 	peerId: "client1"
-    }
+}
+
 var output = document.getElementById("output");
 var print = function(message) {
 	var d = document.createElement("div");
@@ -28,6 +29,16 @@ function register() {
     print("Connection is established \n");
     ws.send(JSON.stringify(payload))
     }
+}
+
+function echoTest() {
+    var payloadechotest = {
+    type: "echoTest",
+    sessionId: "session_1",
+    peerId: "client1",
+    jsep: webrtcPeerConnection.localDescription
+}
+
 }
 
 function getLocalStream() { 
