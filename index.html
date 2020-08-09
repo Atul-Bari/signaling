@@ -44,11 +44,11 @@ function icecandidate() {
 
 function echoTest() {
     var payloadechotest = {
-    type: "echoTest",
-    sessionId: "session_1",
-    peerId: "client1",
-    jsep: webrtcPeerConnection.localDescription
-}
+        type: "echoTest",
+        sessionId: "session_1",
+        peerId: "client1",
+        jsep: webrtcPeerConnection.localDescription
+    }
 
 }
 
@@ -78,15 +78,14 @@ function startrtc() {
 function makecall() {
     webrtcPeerConnection.createOffer(
         fubnction (sessionDescription) {
-        console.log("Setting session discription");
-        console.log(sessionDescription);
+        //console.log("Setting session discription");
+        //console.log(sessionDescription);
         },
         function(err) {
             console.log(err)
         }
     )
 }
-
 function getLocalStream() { 
     var vidstream = document.getElementById("stream");
          var constraints = {"video":true,"audio":true};
