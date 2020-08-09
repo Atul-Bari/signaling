@@ -77,9 +77,9 @@ function startrtc() {
 
 function makecall() {
     webrtcPeerConnection.createOffer(
-        fubnction (sessionDescription) {
-        //console.log("Setting session discription");
-        //console.log(sessionDescription);
+        function (sessionDescription) {
+        console.log("Setting session discription");
+        console.log(sessionDescription);
         },
         function(err) {
             console.log(err)
