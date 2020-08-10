@@ -6,7 +6,7 @@
 <body>
 <div id="output"></div>
 <button onclick="register()">Register</button>
-<button onclick="startrtc()">StartRTC</button>
+<button onclick="startrtc()">IceCandidate</button>
 <button onclick="getLocalStream()">Get Media</button>
 <button onclick="echotest()">EchoTest</button>
 <button onclick="makecall()">Make call</button>
@@ -49,6 +49,7 @@ var print = function(message) {
 function register() {
     // ws = new WebSocket("ws://203.153.53.181:51000/ws");
     websocketConnection = new WebSocket("ws://127.0.0.1:51000/ws");
+    // websocketConnection = new WebSocket("ws://203.153.53.181:51000/ws");
     websocketConnection.onopen = function(evt) {
     print("Connection is established \n");
     // ws.send(JSON.stringify(payloadregister))
@@ -93,13 +94,25 @@ function icecandidate() {
 }
 
 
-function echoTest() {
-    var payloadechotest = {
+function echotest() {
+
+    webrtcPeerConnection.createOffer(
+        function (sessionDescription) {
+        console.log("Setting createOffer session discription");
+        console.log(sessionDescription);
+        webrtcPeerConnection.setLocalDescription(sessionDescription);
+        var payloadechotest = {
         type: "echoTest",
         sessionId: "session_1",
         peerId: "client1",
-        jsep: webrtcPeerConnection.localDescription
+        jsep: sessionDescription
     }
+        websocketConnection.send(JSON.stringify(payloadechotest));
+        },
+        function(err) {
+            console.log(err)
+        }
+    )
 
 }
 

@@ -78,17 +78,6 @@ func (c *Client) readPump() {
 		data := MsgDetails{message, c}
 		c.hub.broadcast <- &data
 
-		// for client := range c.hub.clients {
-		// 	if client == c {
-		// 		continue
-		// 	}
-		// 	select {
-		// 	case client.send <- message:
-		// 	default:
-		// 		close(client.send)
-		// 		delete(c.hub.clients, client)
-		// 	}
-		// }
 	}
 }
 

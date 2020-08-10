@@ -56,7 +56,7 @@ func (h *Hub) run() {
 				close(client.send)
 			}
 		case message := <-h.broadcast:
-			message.msg = Makecall(message.msg)
+			//message.msg = Makecall(message.msg)
 
 			for client := range h.clients {
 				if client == message.cli {
