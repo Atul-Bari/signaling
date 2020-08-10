@@ -5,12 +5,29 @@
 </head>
 <body>
 <div id="output"></div>
-<button onclick="getLocalStream()">Get Media</button>
 <button onclick="register()">Register</button>
-<button onclick="echotest()">EchoTest</button>
 <button onclick="startrtc()">StartRTC</button>
+<button onclick="getLocalStream()">Get Media</button>
+<button onclick="echotest()">EchoTest</button>
 <button onclick="makecall()">Make call</button>
-<video id="stream" autoplay controls>Your browser does not support video</video> 
+<br>
+<br>
+Local Stream:
+<br>
+<div id="container">
+	<video autoplay="true" id="videoElementlocal">
+	
+	</video>
+</div>
+
+<br>
+Remote Stream:
+<br>
+<div id="container">
+	<video autoplay="true" id="videoElementremote">
+	
+	</video>
+</div>
 <script>
 var payloadregister = {
 	    peerId: "client1"
@@ -19,7 +36,7 @@ var payloadregister = {
 var websocketConnection; 
 var webrtcPeerConnection; 
 var webrtcConfiguration; 
-var media;
+var stream;
 var reportError; 
 
 var output = document.getElementById("output");
@@ -30,11 +47,45 @@ var print = function(message) {
 };
 
 function register() {
-    ws = new WebSocket("ws://203.153.53.181:51000/ws");
-    ws.onopen = function(evt) {
+    // ws = new WebSocket("ws://203.153.53.181:51000/ws");
+    websocketConnection = new WebSocket("ws://127.0.0.1:51000/ws");
+    websocketConnection.onopen = function(evt) {
     print("Connection is established \n");
-    ws.send(JSON.stringify(payloadregister))
+    // ws.send(JSON.stringify(payloadregister))
     }
+    
+    websocketConnection.onmessage = function(event) {
+        console.log("onmessage");
+        console.log(event.data);
+
+
+        const message = JSON.parse(event.data);
+        if(message.type == "offer") {
+            webrtcPeerConnection.setRemoteDescription(new RTCSessionDescription(message));
+            webrtcPeerConnection.createAnswer(
+                function (sessionDescription) {
+                    console.log("Setting creatAnswer session discription");
+                    console.log(sessionDescription);
+
+                    webrtcPeerConnection.setLocalDescription(sessionDescription);
+                    websocketConnection.send(JSON.stringify(sessionDescription));
+                },
+                function(err) {
+                    console.log(err)
+                }
+            )
+        }
+
+        if(message.type == "answer") {
+            webrtcPeerConnection.setRemoteDescription(new RTCSessionDescription(message));
+        }
+
+        if(message.type == "candidate") {
+            webrtcPeerConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
+        }
+
+    }
+
 }
 
 function icecandidate() {
@@ -53,16 +104,35 @@ function echoTest() {
 }
 
 function startrtc() {
+    console.log("startrtc")
     webrtcConfiguration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] ,'bundlePolicy': 'max-bundle'};
     webrtcPeerConnection = new RTCPeerConnection(webrtcConfiguration);
+
     webrtcPeerConnection.onicecandidate = function(event) {
         console.log("onicecandidate")
         console.log(event)
+
+        if(event.candidate) {
+            console.log(event.candidate.toJSON());
+            websocketConnection.send(JSON.stringify({
+                type: "candidate",
+                candidate: event.candidate.toJSON(),
+            }, null, 2))
+        }
     }
 
     webrtcPeerConnection.onaddstream = function(event) {
         console.log("onaddstream")
         console.log(event)
+
+        var videoElement = document.querySelector("#videoElementremote");
+        videoElement.srcObject = event.stream;
+
+        videoElement.onloadedmetadata = function(e) {
+            console.log("Loaded meta data"+ e);
+            videoElement.play();
+        }
+
     }
 
     webrtcPeerConnection.onremovestream = function(event) {
@@ -70,16 +140,18 @@ function startrtc() {
         console.log(event)
     }
 
-    webrtcPeerConnection.addStream(media);
-
 
 }
 
 function makecall() {
     webrtcPeerConnection.createOffer(
         function (sessionDescription) {
-        console.log("Setting session discription");
+        console.log("Setting createOffer session discription");
         console.log(sessionDescription);
+
+        webrtcPeerConnection.setLocalDescription(sessionDescription);
+        websocketConnection.send(JSON.stringify(sessionDescription));
+
         },
         function(err) {
             console.log(err)
@@ -87,18 +159,21 @@ function makecall() {
     )
 }
 function getLocalStream() { 
-    var vidstream = document.getElementById("stream");
-         var constraints = {"video":true,"audio":true};
 
-  media = navigator.mediaDevices.getUserMedia(constraints); 
-  console.log(media);
+var video = document.querySelector("#videoElementlocal");
 
-  //var tracks = media.getTracks();
-  //console.log(track);
+if (navigator.mediaDevices.getUserMedia) {
+  stream = navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+      webrtcPeerConnection.addStream(stream);
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+    console.log(stream)
 
-  var videoelement = document.querySelector("#stream");
-  videoelement.srcObject = media
-
+}
 }
 // ws = new WebSocket("{{.}}");
 // ws.onopen = function(evt) {

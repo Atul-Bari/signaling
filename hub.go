@@ -5,21 +5,27 @@
 package main
 
 import (
-	"log"
-	"google.golang.org/grpc"
-        "golang.org/x/net/context"
-	pb "server/proto"
 	"flag"
+	"log"
+	pb "server/proto"
 
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 )
+
 // Hub maintains the set of active clients and broadcasts messages to the
 // clients.
+type MsgDetails struct {
+	msg []byte
+	cli *Client
+}
+
 type Hub struct {
 	// Registered clients.
 	clients map[*Client]bool
 
 	// Inbound messages from the clients.
-	broadcast chan []byte
+	broadcast chan *MsgDetails
 
 	// Register requests from the clients.
 	register chan *Client
@@ -30,7 +36,7 @@ type Hub struct {
 
 func newHub() *Hub {
 	return &Hub{
-		broadcast:  make(chan []byte),
+		broadcast:  make(chan *MsgDetails),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
@@ -50,10 +56,14 @@ func (h *Hub) run() {
 				close(client.send)
 			}
 		case message := <-h.broadcast:
-			//Makecall(message)
+			message.msg = Makecall(message.msg)
+
 			for client := range h.clients {
+				if client == message.cli {
+					continue
+				}
 				select {
-				case client.send <- message:
+				case client.send <- message.msg:
 				default:
 					close(client.send)
 					delete(h.clients, client)
@@ -63,24 +73,25 @@ func (h *Hub) run() {
 	}
 }
 
-func Makecall(msg  []byte) {
+func Makecall(msg []byte) []byte {
 	backend := flag.String("b", "localhost:57778", "address of the say backend")
-        flag.Parse()
+	flag.Parse()
 
-        conn, err := grpc.Dial(*backend, grpc.WithInsecure())
-        if err != nil {
-                log.Fatalf("could not connect to %s: %v", *backend, err)
-        }
-        defer conn.Close()
+	conn, err := grpc.Dial(*backend, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("could not connect to %s: %v", *backend, err)
+	}
+	defer conn.Close()
 
 	client := pb.NewMakecallClient(conn)
 
-        text := &pb.Sdp{Fromid: "X", Toid:"Y", Offer:string(msg), Sessionid:"qwerty"}
+	text := &pb.Sdp{Fromid: "X", Toid: "Y", Offer: string(msg), Sessionid: "qwerty"}
 
 	resp, err := client.Sdpexchange(context.Background(), text)
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Offer, err)
-        }
+	}
 
+	return []byte(resp.Offer)
 
 }

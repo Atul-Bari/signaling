@@ -6,8 +6,10 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"net/http"
+	"sync/atomic"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -39,6 +41,8 @@ var upgrader = websocket.Upgrader{
 
 // Client is a middleman between the websocket connection and the hub.
 type Client struct {
+	peerid string
+
 	hub *Hub
 
 	// The websocket connection.
@@ -71,7 +75,20 @@ func (c *Client) readPump() {
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		log.Println(string(message))
-		c.hub.broadcast <- message
+		data := MsgDetails{message, c}
+		c.hub.broadcast <- &data
+
+		// for client := range c.hub.clients {
+		// 	if client == c {
+		// 		continue
+		// 	}
+		// 	select {
+		// 	case client.send <- message:
+		// 	default:
+		// 		close(client.send)
+		// 		delete(c.hub.clients, client)
+		// 	}
+		// }
 	}
 }
 
@@ -121,6 +138,8 @@ func (c *Client) writePump() {
 	}
 }
 
+var count int64
+
 // serveWs handles websocket requests from the peer.
 func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
@@ -128,7 +147,11 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
+	n := atomic.AddInt64(&count, 1)
+	log.Printf("Total number of connections: %v", n)
+	Clientid := fmt.Sprintf("client%d", n)
+	log.Printf("Total number of connections: %v", Clientid)
+	client := &Client{peerid: Clientid, hub: hub, conn: conn, send: make(chan []byte, 256)}
 	client.hub.register <- client
 
 	// Allow collection of memory referenced by the caller by doing all work in
