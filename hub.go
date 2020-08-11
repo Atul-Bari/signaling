@@ -6,7 +6,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"log"
 	pb "server/proto"
 
@@ -75,8 +74,8 @@ func (h *Hub) run() {
 }
 
 func Makecall(msg *MsgDetails) {
-	test := flag.String("t", "localhost:57778", "address of the say ")
-	flag.Parse()
+	//backend := flag.String("b", "localhost:57778", "address of the say backend")
+	//flag.Parse()
 	log.Println()
 	log.Println()
 	log.Println()
@@ -84,9 +83,9 @@ func Makecall(msg *MsgDetails) {
 	log.Println()
 	log.Println()
 
-	conn, err := grpc.Dial(*test, grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:57778", grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("could not connect to %s: %v", *test, err)
+		log.Fatalf("could not connect to: %v", err)
 	}
 	defer conn.Close()
 
