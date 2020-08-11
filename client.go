@@ -76,7 +76,8 @@ func (c *Client) readPump() {
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		log.Println(string(message))
 		data := MsgDetails{message, c}
-		c.hub.broadcast <- &data
+		//c.hub.broadcast <- &data
+		go Makecall(&data)
 
 	}
 }

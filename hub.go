@@ -73,7 +73,7 @@ func (h *Hub) run() {
 	}
 }
 
-func Makecall(msg []byte) []byte {
+func Makecall(msg *MsgDetails) {
 	backend := flag.String("b", "localhost:57778", "address of the say backend")
 	flag.Parse()
 
@@ -85,13 +85,13 @@ func Makecall(msg []byte) []byte {
 
 	client := pb.NewMakecallClient(conn)
 
-	text := &pb.Sdp{Fromid: "X", Toid: "Y", Offer: string(msg), Sessionid: "qwerty"}
+	text := &pb.Sdp{Fromid: "X", Toid: "Y", Offer: string(msg.msg), Sessionid: "qwerty"}
 
 	resp, err := client.Sdpexchange(context.Background(), text)
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Offer, err)
 	}
-
-	return []byte(resp.Offer)
+	//msg.msg = []byte(resp.GetOffer())
+	msg.cli.hub.broadcast <- msg
 
 }
