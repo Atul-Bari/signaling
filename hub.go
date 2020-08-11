@@ -5,11 +5,12 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	pb "server/proto"
 
-	"golang.org/x/net/context"
+	//"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
