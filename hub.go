@@ -93,12 +93,29 @@ func Makecall(msg *MsgDetails) {
 	client := pb.NewMakecallClient(conn)
 
 	text := &pb.Sdp{Fromid: "X", Toid: "Y", Offer: string(msg.msg), Sessionid: "qwerty"}
-
+	log.Println()
+	log.Println()
+	log.Println()
+	log.Println("################# 2Make call called")
+	log.Println()
+	log.Println()
 	resp, err := client.Sdpexchange(context.Background(), text)
+	log.Println()
+	log.Println()
+	log.Println()
+	log.Println("################# 3Make call called")
+	log.Println()
+	log.Println()
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Offer, err)
 	}
 	//msg.msg = []byte(resp.GetOffer())
+	log.Println()
+	log.Println()
+	log.Println()
+	log.Println("#################4 Make call called")
+	log.Println()
+	log.Println()
 	msg.cli.hub.broadcast <- msg
 
 }
