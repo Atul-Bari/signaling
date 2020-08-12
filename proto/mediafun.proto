@@ -7,9 +7,10 @@ service Makecall {
 }
 
 message sdp {
-    string fromid=1;
-    string toid=2;
-    string offer = 3;
-    string sessionid=4;
+    string type=1;
+    string sessionid=2;
+    string hostid = 3;
+    string peerid=4;
+    string jsep=5;
 
 }
