@@ -120,10 +120,13 @@ var file_mediafun_proto_rawDesc = []byte{
 	0x68, 0x6f, 0x73, 0x74, 0x69, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x65, 0x65, 0x72, 0x69, 0x64,
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x65, 0x65, 0x72, 0x69, 0x64, 0x12, 0x12,
 	0x0a, 0x04, 0x6a, 0x73, 0x65, 0x70, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6a, 0x73,
-	0x65, 0x70, 0x32, 0x2f, 0x0a, 0x08, 0x4d, 0x61, 0x6b, 0x65, 0x63, 0x61, 0x6c, 0x6c, 0x12, 0x23,
+	0x65, 0x70, 0x32, 0x5d, 0x0a, 0x08, 0x4d, 0x61, 0x6b, 0x65, 0x63, 0x61, 0x6c, 0x6c, 0x12, 0x23,
 	0x0a, 0x0b, 0x73, 0x64, 0x70, 0x65, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x08, 0x2e,
 	0x73, 0x61, 0x79, 0x2e, 0x73, 0x64, 0x70, 0x1a, 0x08, 0x2e, 0x73, 0x61, 0x79, 0x2e, 0x73, 0x64,
-	0x70, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x22, 0x00, 0x12, 0x2c, 0x0a, 0x10, 0x62, 0x69, 0x64, 0x69, 0x72, 0x73, 0x64, 0x70, 0x65,
+	0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x08, 0x2e, 0x73, 0x61, 0x79, 0x2e, 0x73, 0x64,
+	0x70, 0x1a, 0x08, 0x2e, 0x73, 0x61, 0x79, 0x2e, 0x73, 0x64, 0x70, 0x22, 0x00, 0x28, 0x01, 0x30,
+	0x01, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -144,9 +147,11 @@ var file_mediafun_proto_goTypes = []interface{}{
 }
 var file_mediafun_proto_depIdxs = []int32{
 	0, // 0: say.Makecall.sdpexchange:input_type -> say.sdp
-	0, // 1: say.Makecall.sdpexchange:output_type -> say.sdp
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // 1: say.Makecall.bidirsdpexchange:input_type -> say.sdp
+	0, // 2: say.Makecall.sdpexchange:output_type -> say.sdp
+	0, // 3: say.Makecall.bidirsdpexchange:output_type -> say.sdp
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -204,6 +209,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MakecallClient interface {
 	Sdpexchange(ctx context.Context, in *Sdp, opts ...grpc.CallOption) (*Sdp, error)
+	Bidirsdpexchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BidirsdpexchangeClient, error)
 }
 
 type makecallClient struct {
@@ -223,9 +229,41 @@ func (c *makecallClient) Sdpexchange(ctx context.Context, in *Sdp, opts ...grpc.
 	return out, nil
 }
 
+func (c *makecallClient) Bidirsdpexchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BidirsdpexchangeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[0], "/say.Makecall/bidirsdpexchange", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &makecallBidirsdpexchangeClient{stream}
+	return x, nil
+}
+
+type Makecall_BidirsdpexchangeClient interface {
+	Send(*Sdp) error
+	Recv() (*Sdp, error)
+	grpc.ClientStream
+}
+
+type makecallBidirsdpexchangeClient struct {
+	grpc.ClientStream
+}
+
+func (x *makecallBidirsdpexchangeClient) Send(m *Sdp) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *makecallBidirsdpexchangeClient) Recv() (*Sdp, error) {
+	m := new(Sdp)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // MakecallServer is the server API for Makecall service.
 type MakecallServer interface {
 	Sdpexchange(context.Context, *Sdp) (*Sdp, error)
+	Bidirsdpexchange(Makecall_BidirsdpexchangeServer) error
 }
 
 // UnimplementedMakecallServer can be embedded to have forward compatible implementations.
@@ -234,6 +272,9 @@ type UnimplementedMakecallServer struct {
 
 func (*UnimplementedMakecallServer) Sdpexchange(context.Context, *Sdp) (*Sdp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Sdpexchange not implemented")
+}
+func (*UnimplementedMakecallServer) Bidirsdpexchange(Makecall_BidirsdpexchangeServer) error {
+	return status.Errorf(codes.Unimplemented, "method Bidirsdpexchange not implemented")
 }
 
 func RegisterMakecallServer(s *grpc.Server, srv MakecallServer) {
@@ -258,6 +299,32 @@ func _Makecall_Sdpexchange_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Makecall_Bidirsdpexchange_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(MakecallServer).Bidirsdpexchange(&makecallBidirsdpexchangeServer{stream})
+}
+
+type Makecall_BidirsdpexchangeServer interface {
+	Send(*Sdp) error
+	Recv() (*Sdp, error)
+	grpc.ServerStream
+}
+
+type makecallBidirsdpexchangeServer struct {
+	grpc.ServerStream
+}
+
+func (x *makecallBidirsdpexchangeServer) Send(m *Sdp) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *makecallBidirsdpexchangeServer) Recv() (*Sdp, error) {
+	m := new(Sdp)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _Makecall_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "say.Makecall",
 	HandlerType: (*MakecallServer)(nil),
@@ -267,6 +334,13 @@ var _Makecall_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Makecall_Sdpexchange_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "bidirsdpexchange",
+			Handler:       _Makecall_Bidirsdpexchange_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "mediafun.proto",
 }
