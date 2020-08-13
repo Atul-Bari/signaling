@@ -6,6 +6,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,7 +14,6 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/pion/webrtc/v3"
 )
 
 const (
@@ -29,6 +29,36 @@ const (
 	// Maximum message size allowed from peer.
 	maxMessageSize = 2048
 )
+
+type echotestReq struct {
+	Type      string `json:"type"`
+	SessionID string `json:"sessionId"`
+	PeerId    string `json:"peerId"`
+	Jsep      string `json:"jsep"`
+}
+
+type icecandidatereq struct {
+	Type      string `json:"type"`
+	SessionId string `json:"sessionId"`
+	PeerId    string `json:"peerId"`
+	Jsep      string `json:"candidate"`
+}
+
+type offermeetingreq struct {
+	Type      string `json:"type"`
+	SessionId string `json:"sessionId"`
+	HostId    string `json:"hostid"`
+	PeerId    string `json:"peerId"`
+	Jsep      string `json:"jsep"`
+}
+
+type ansmeetingreq struct {
+	Type      string `json:"type"`
+	SessionId string `json:"sessionId"`
+	HostId    string `json:"hostid"`
+	PeerId    string `json:"peerId"`
+	Jsep      string `json:"jsep"`
+}
 
 var (
 	newline = []byte{'\n'}
@@ -53,6 +83,34 @@ type Client struct {
 	send chan []byte
 }
 
+func CreateEchoFromMap(m map[string]interface{}) (echotestReq, error) {
+	data, _ := json.Marshal(m)
+	var result echotestReq
+	err := json.Unmarshal(data, &result)
+	return result, err
+}
+
+func CreateOfferFromMap(m map[string]interface{}) (offermeetingreq, error) {
+	data, _ := json.Marshal(m)
+	var result offermeetingreq
+	err := json.Unmarshal(data, &result)
+	return result, err
+}
+
+func CreateAnsFromMap(m map[string]interface{}) (ansmeetingreq, error) {
+	data, _ := json.Marshal(m)
+	var result ansmeetingreq
+	err := json.Unmarshal(data, &result)
+	return result, err
+}
+
+func CreateIceFromMap(m map[string]interface{}) (icecandidatereq, error) {
+	data, _ := json.Marshal(m)
+	var result icecandidatereq
+	err := json.Unmarshal(data, &result)
+	return result, err
+}
+
 // readPump pumps messages from the websocket connection to the hub.
 //
 // The application runs readPump in a per-connection goroutine. The application
@@ -75,10 +133,57 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		log.Println(string(message))
-		data := MsgDetails{message, c}
+		log.Println("Raw Received:", string(message))
+
+		jsonMap := make(map[string]interface{})
+		err = json.Unmarshal(message, &jsonMap)
+
+		eventType := fmt.Sprintf("%v", jsonMap["type"])
+
+		//echoreq, _ := Unmarshaloffer(message)
+		log.Println()
+
 		//c.hub.broadcast <- &data
-		go Makecall(&data)
+		switch eventType {
+		case "echoTest":
+			log.Println("Received Type Echo Test", eventType)
+			requestStruct, err := CreateEchoFromMap(jsonMap)
+			if err != nil {
+				log.Println("No marshel")
+			}
+			//log.Println(requestStruct.Jsep)
+			data := echoMsgDetails{requestStruct, c}
+			go Makecall(data)
+
+		case "offerMeeting":
+			log.Println("Received Type Offer :", eventType)
+			requestStruct, err := CreateOfferFromMap(jsonMap)
+			if err != nil {
+				log.Println("No marshel")
+			}
+
+			data := offerMsgDetails{requestStruct, c}
+			go offerMakecall(data)
+		case "iceCandidate":
+			log.Println("Received Type Ice :", eventType)
+			requestStruct, err := CreateIceFromMap(jsonMap)
+			if err != nil {
+				log.Println("No marshel")
+			}
+
+			data := iceMsgDetails{requestStruct, c}
+			go iceMakecall(data)
+		case "answerMeeting":
+			log.Println("Received Type Answer :", eventType)
+			requestStruct, err := CreateAnsFromMap(jsonMap)
+			if err != nil {
+				log.Println("No marshel")
+			}
+
+			data := ansMsgDetails{requestStruct, c}
+			go ansMakecall(data)
+
+		}
 
 	}
 }

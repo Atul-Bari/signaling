@@ -15,9 +15,41 @@ import (
 
 // Hub maintains the set of active clients and broadcasts messages to the
 // clients.
-type MsgDetails struct {
-	msg []byte
+type echoMsgDetails struct {
+
+	//msg *offerMeetingReq
+	//msg []byte
+	msg echotestReq
 	cli *Client
+}
+
+type offerMsgDetails struct {
+
+	//msg *offerMeetingReq
+	//msg []byte
+	msg offermeetingreq
+	cli *Client
+}
+
+type ansMsgDetails struct {
+
+	//msg *offerMeetingReq
+	//msg []byte
+	msg ansmeetingreq
+	cli *Client
+}
+
+type iceMsgDetails struct {
+
+	//msg *offerMeetingReq
+	//msg []byte
+	msg icecandidatereq
+	cli *Client
+}
+
+type MsgDetails struct {
+	jsep string
+	c    *Client
 }
 
 type Hub struct {
@@ -59,11 +91,11 @@ func (h *Hub) run() {
 			//message.msg = Makecall(message.msg)
 
 			for client := range h.clients {
-				if client == message.cli {
+				if client == message.c {
 					continue
 				}
 				select {
-				case client.send <- message.msg:
+				case client.send <- []byte(message.jsep):
 				default:
 					close(client.send)
 					delete(h.clients, client)
@@ -73,48 +105,125 @@ func (h *Hub) run() {
 	}
 }
 
-func Makecall(msg *MsgDetails) {
-	//backend := flag.String("b", "localhost:57778", "address of the say backend")
-	//flag.Parse()
-	log.Println()
-	log.Println()
-	log.Println()
-	log.Println("################# Make call called")
-	log.Println()
-	log.Println()
+func Makecall(msg echoMsgDetails) {
 
-	conn, err := grpc.Dial("localhost:57778", grpc.WithInsecure())
+	log.Println("In echotest Makecall()")
+	conn, err := grpc.Dial("203.153.53.181:57778", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("could not connect to: %v", err)
 	}
 	defer conn.Close()
 
 	client := pb.NewMakecallClient(conn)
+	// log.Println("Type: ", msg.msg.Type)
+	// log.Println("Jsep", msg.msg.Jsep)
+	// log.Println("Session", msg.msg.SessionID)
+	// log.Println("Peer", msg.msg.PeerId)
 
-	text := &pb.Sdp{Fromid: "X", Toid: "Y", Offer: string(msg.msg), Sessionid: "qwerty"}
-	log.Println()
-	log.Println()
-	log.Println()
-	log.Println("################# 2Make call called")
-	log.Println()
-	log.Println()
-	resp, err := client.Sdpexchange(context.Background(), text)
-	log.Println()
-	log.Println()
-	log.Println()
-	log.Println("################# 3Make call called")
-	log.Println()
-	log.Println()
+	test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+	//	text := &pb.Sdp{Type: msg.msg.Type, Hostid: "NO", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+	resp, err := client.Sdpexchange(context.Background(), test)
+	log.Println("Makecall resp Jsep", resp.Jsep)
 	if err != nil {
-		log.Fatalf("could not say %s: %v", resp.Offer, err)
+		log.Fatalf("could not say %s: %v", resp.Jsep, err)
 	}
 	//msg.msg = []byte(resp.GetOffer())
-	log.Println()
-	log.Println()
-	log.Println()
-	log.Println("#################4 Make call called")
-	log.Println()
-	log.Println()
-	msg.cli.hub.broadcast <- msg
+	tmp := MsgDetails{
+		jsep: resp.Jsep,
+		c:    msg.cli,
+	}
+	msg.cli.hub.broadcast <- &tmp
+
+}
+
+func offerMakecall(msg offerMsgDetails) {
+	log.Println("In offer Makecall()")
+	conn, err := grpc.Dial("203.153.53.181:57778", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("could not connect to: %v", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewMakecallClient(conn)
+	// log.Println("Type: ", msg.msg.Type)
+	// log.Println("Jsep", msg.msg.Jsep)
+	// log.Println("Session", msg.msg.SessionId)
+	// log.Println("Peer", msg.msg.PeerId)
+
+	test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+	//	text := &pb.Sdp{Type: msg.msg.Type, Hostid: "NO", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+	resp, err := client.Sdpexchange(context.Background(), test)
+	log.Println("offerMakecall resp Jsep", resp.Jsep)
+	if err != nil {
+		log.Fatalf("could not say %s: %v", resp.Jsep, err)
+	}
+	//msg.msg = []byte(resp.GetOffer())
+	tmp := MsgDetails{
+		jsep: resp.Jsep,
+		c:    msg.cli,
+	}
+	msg.cli.hub.broadcast <- &tmp
+
+}
+
+func ansMakecall(msg ansMsgDetails) {
+
+	log.Println("In answer Makecall()")
+	conn, err := grpc.Dial("203.153.53.181:57778", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("could not connect to: %v", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewMakecallClient(conn)
+	// log.Println("Type: ", msg.msg.Type)
+	// log.Println("Jsep", msg.msg.Jsep)
+	// log.Println("Session", msg.msg.SessionId)
+	// log.Println("Peer", msg.msg.PeerId)
+
+	test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+	//	text := &pb.Sdp{Type: msg.msg.Type, Hostid: "NO", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+	resp, err := client.Sdpexchange(context.Background(), test)
+	log.Println("ansMakecall resp Jsep", resp.Jsep)
+	if err != nil {
+		log.Fatalf("could not say %s: %v", resp.Jsep, err)
+	}
+	//msg.msg = []byte(resp.GetOffer())
+	tmp := MsgDetails{
+		jsep: resp.Jsep,
+		c:    msg.cli,
+	}
+	msg.cli.hub.broadcast <- &tmp
+
+}
+
+func iceMakecall(msg iceMsgDetails) {
+
+	log.Println("In Ice Makecall()")
+	conn, err := grpc.Dial("203.153.53.181:57778", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("could not connect to: %v", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewMakecallClient(conn)
+	// log.Println("Type: ", msg.msg.Type)
+	// log.Println("Jsep", msg.msg.Jsep)
+	// log.Println("Session", msg.msg.SessionId)
+	// log.Println("Peer", msg.msg.PeerId)
+
+	test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+	//	text := &pb.Sdp{Type: msg.msg.Type, Hostid: "NO", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+	resp, err := client.Sdpexchange(context.Background(), test)
+	log.Println("iceMakecall resp Jsep", resp.Jsep)
+	if err != nil {
+		log.Fatalf("could not say %s: %v", resp.Jsep, err)
+	}
+	//msg.msg = []byte(resp.GetOffer())
+	tmp := MsgDetails{
+		jsep: resp.Jsep,
+		c:    msg.cli,
+	}
+	msg.cli.hub.broadcast <- &tmp
 
 }

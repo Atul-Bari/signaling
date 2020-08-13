@@ -69,7 +69,15 @@ function register() {
                     console.log(sessionDescription);
 
                     webrtcPeerConnection.setLocalDescription(sessionDescription);
-                    websocketConnection.send(JSON.stringify(sessionDescription));
+                    var payloadanswerMeeting = {
+                        type: "answerMeeting",
+                        sessionId: "session_1",
+                        hostId: "client1",
+                        peerId: "client2",
+                        jsep: JSON.stringify(sessionDescription),
+                    }
+                    // websocketConnection.send(JSON.stringify(sessionDescription));
+                    websocketConnection.send(JSON.stringify(payloadanswerMeeting));
                 },
                 function(err) {
                     console.log(err)
@@ -89,10 +97,6 @@ function register() {
 
 }
 
-function icecandidate() {
-    
-}
-
 
 function echotest() {
 
@@ -105,7 +109,7 @@ function echotest() {
         type: "echoTest",
         sessionId: "session_1",
         peerId: "client1",
-        jsep: sessionDescription
+        jsep: JSON.stringify(sessionDescription)
     }
         websocketConnection.send(JSON.stringify(payloadechotest));
         },
@@ -125,12 +129,23 @@ function startrtc() {
         console.log("onicecandidate")
         console.log(event)
 
+        
         if(event.candidate) {
             console.log(event.candidate.toJSON());
-            websocketConnection.send(JSON.stringify({
+            var payloadcandidate = {
+            type: "iceCandidate",
+            sessionId: "session_1",
+            peerId: "client1",
+            candidate: JSON.stringify({
                 type: "candidate",
                 candidate: event.candidate.toJSON(),
-            }, null, 2))
+            }, null, 2)
+            }
+            websocketConnection.send(JSON.stringify(payloadcandidate))
+            //websocketConnection.send(JSON.stringify({
+              //  type: "candidate",
+              //  candidate: event.candidate.toJSON(),
+            //}, null, 2))
         }
     }
 
@@ -163,7 +178,16 @@ function makecall() {
         console.log(sessionDescription);
 
         webrtcPeerConnection.setLocalDescription(sessionDescription);
-        websocketConnection.send(JSON.stringify(sessionDescription));
+
+        var payloadofferMeeting = {
+        type: "offerMeeting",
+        sessionId: "session_1",
+        hostId: "client1",
+        peerId: "client2",
+        jsep: JSON.stringify(sessionDescription),
+        }
+        //websocketConnection.send(JSON.stringify(sessionDescription));
+        websocketConnection.send(JSON.stringify(payloadofferMeeting));
 
         },
         function(err) {
@@ -171,7 +195,7 @@ function makecall() {
         }
     )
 }
-function getLocalStream() { 
+function getLocalStream() {
 
 var video = document.querySelector("#videoElementlocal");
 
@@ -211,3 +235,15 @@ window.onload = function() {
 
 </body>
 </html>
+
+
+<!-- event.data = event.data.replace(/\\n/g, "\\n")
+               .replace(/\\'/g, "\\'")
+               .replace(/\\"/g, '\\"')
+               .replace(/\\&/g, "\\&")
+               .replace(/\\r/g, "\\r")
+               .replace(/\\t/g, "\\t")
+               .replace(/\\b/g, "\\b")
+               .replace(/\\f/g, "\\f");
+// remove non-printable and other non-valid JSON chars
+//event.data = event.data.replace(/[\u0000-\u0019]+/g,""); -->
