@@ -4,7 +4,7 @@ package say;
 
 service Makecall {
     rpc sdpexchange(sdp) returns(sdp) {}
-    rpc bidirsdpexchange(stream sdp) return(stream sdp)
+    rpc bidirsdpexchange(stream sdp) returns(stream sdp) {}
 }
 
 message sdp {
