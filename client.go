@@ -1,7 +1,3 @@
-// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package main
 
 import (
@@ -70,7 +66,6 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-// Client is a middleman between the websocket connection and the hub.
 type Client struct {
 	peerid string
 
@@ -83,6 +78,7 @@ type Client struct {
 	send chan []byte
 }
 
+//unmarhsel received from browser
 func CreateEchoFromMap(m map[string]interface{}) (echotestReq, error) {
 	data, _ := json.Marshal(m)
 	var result echotestReq
@@ -111,17 +107,11 @@ func CreateIceFromMap(m map[string]interface{}) (icecandidatereq, error) {
 	return result, err
 }
 
-// readPump pumps messages from the websocket connection to the hub.
-//
-// The application runs readPump in a per-connection goroutine. The application
-// ensures that there is at most one reader on a connection by executing all
-// reads from this goroutine.
 func (c *Client) readPump() {
 	defer func() {
 		c.hub.unregister <- c
 		c.conn.Close()
 	}()
-	//c.conn.SetReadLimit(maxMessageSize)
 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
 	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 	for {
@@ -151,9 +141,9 @@ func (c *Client) readPump() {
 			if err != nil {
 				log.Println("No marshel")
 			}
-			//log.Println(requestStruct.Jsep)
 			data := echoMsgDetails{requestStruct, c}
-			go Makecall(data)
+			// echodata <- &data
+			go echoMakecall(data)
 
 		case "offerMeeting":
 			log.Println("Received Type Offer :", eventType)
@@ -163,6 +153,7 @@ func (c *Client) readPump() {
 			}
 
 			data := offerMsgDetails{requestStruct, c}
+			// offerdata <- &data
 			go offerMakecall(data)
 		case "iceCandidate":
 			log.Println("Received Type Ice :", eventType)
@@ -172,6 +163,7 @@ func (c *Client) readPump() {
 			}
 
 			data := iceMsgDetails{requestStruct, c}
+			// icedata <- &data
 			go iceMakecall(data)
 		case "answerMeeting":
 			log.Println("Received Type Answer :", eventType)
@@ -181,6 +173,7 @@ func (c *Client) readPump() {
 			}
 
 			data := ansMsgDetails{requestStruct, c}
+			// ansdata <- &data
 			go ansMakecall(data)
 
 		}
@@ -188,11 +181,6 @@ func (c *Client) readPump() {
 	}
 }
 
-// writePump pumps messages from the hub to the websocket connection.
-//
-// A goroutine running writePump is started for each connection. The
-// application ensures that there is at most one writer to a connection by
-// executing all writes from this goroutine.
 func (c *Client) writePump() {
 	ticker := time.NewTicker(pingPeriod)
 	defer func() {
