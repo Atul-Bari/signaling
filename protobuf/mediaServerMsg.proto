@@ -11,7 +11,7 @@ message invite {
     string Type=1;
     string Host=2;
     string Peer = 3;
-    string Jsep=4;
+    map <string, string> Jsep=4;
     string SessionID=5;
     bool record=6;
 }
