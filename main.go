@@ -21,12 +21,15 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "index.html")
 }
 
+var hub *Hub
+
 func main() {
 	flag.Parse()
-	hub := newHub()
+	hub = newHub()
 
 	grpcConnection()
 	go hub.run()
+	go BidirCall()
 
 	http.HandleFunc("/", serveHome)
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {

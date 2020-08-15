@@ -6,8 +6,10 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	pb "server/proto"
+	"time"
 
 	//"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -62,7 +64,7 @@ type Hub struct {
 	clients map[*Client]bool
 
 	// Inbound messages from the clients.
-	broadcast chan *MsgDetails
+	broadcast chan *pb.Sdp
 
 	// Register requests from the clients.
 	register chan *Client
@@ -73,7 +75,7 @@ type Hub struct {
 
 func newHub() *Hub {
 	return &Hub{
-		broadcast:  make(chan *MsgDetails),
+		broadcast:  make(chan *pb.Sdp),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
@@ -96,11 +98,11 @@ func (h *Hub) run() {
 			//message.msg = Makecall(message.msg)
 
 			for client := range h.clients {
-				if client == message.c {
+				if client.peerid == message.Peerid {
 					continue
 				}
 				select {
-				case client.send <- []byte(message.jsep):
+				case client.send <- []byte(message.Jsep):
 				default:
 					close(client.send)
 					delete(h.clients, client)
@@ -131,11 +133,11 @@ func echoMakecall(msg echoMsgDetails) {
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Jsep, err)
 	}
-	tmp := MsgDetails{
-		jsep: resp.Jsep,
-		c:    msg.cli,
-	}
-	msg.cli.hub.broadcast <- &tmp
+	// tmp := MsgDetails{
+	// 	jsep: resp.Jsep,
+	// 	c:    msg.cli,
+	// }
+	msg.cli.hub.broadcast <- resp
 
 }
 
@@ -147,11 +149,11 @@ func offerMakecall(msg offerMsgDetails) {
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Jsep, err)
 	}
-	tmp := MsgDetails{
-		jsep: resp.Jsep,
-		c:    msg.cli,
-	}
-	msg.cli.hub.broadcast <- &tmp
+	// tmp := MsgDetails{
+	// 	jsep: resp.Jsep,
+	// 	c:    msg.cli,
+	// }
+	msg.cli.hub.broadcast <- resp
 
 }
 
@@ -164,11 +166,12 @@ func ansMakecall(msg ansMsgDetails) {
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Jsep, err)
 	}
-	tmp := MsgDetails{
-		jsep: resp.Jsep,
-		c:    msg.cli,
-	}
-	msg.cli.hub.broadcast <- &tmp
+	// tmp := MsgDetails{
+	// 	jsep: resp.Jsep,
+	// 	c:    msg.cli,
+	// }
+	// msg.cli.hub.broadcast <- &tmp
+	msg.cli.hub.broadcast <- resp
 
 }
 
@@ -181,11 +184,11 @@ func iceMakecall(msg iceMsgDetails) {
 	if err != nil {
 		log.Fatalf("could not say %s: %v", resp.Jsep, err)
 	}
-	tmp := MsgDetails{
-		jsep: resp.Jsep,
-		c:    msg.cli,
-	}
-	msg.cli.hub.broadcast <- &tmp
+	// tmp := MsgDetails{
+	// 	jsep: resp.Jsep,
+	// 	c:    msg.cli,
+	// }
+	msg.cli.hub.broadcast <- resp
 
 }
 
@@ -204,14 +207,14 @@ func iceMakecall(msg iceMsgDetails) {
 //
 
 //used in case bidir grpc needed
-/*func BidirCall() {
+func BidirCall() {
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 
-	defer func() {
-		conn.Close()
-		defer cancel()
-	}()
-	stream, err := data.Bidirsdpexchange(ctx)
+	stream, err := client.Bidirsdpexchange(ctx)
+	defer cancel()
+	if err != nil {
+		log.Fatalf("Failed to receive a note : %v", err)
+	}
 	go func() {
 		for {
 			resp, err := stream.Recv()
@@ -224,40 +227,40 @@ func iceMakecall(msg iceMsgDetails) {
 				log.Fatalf("Failed to receive a note : %v%v", resp, err)
 			}
 
-			//log.Println("Bidir Resp:", resp)
+			log.Println("Bidir Resp:", resp)
 
 			// tmp := MsgDetails{
 			// 	jsep: resp.Jsep,
 			// 	c:    msg.cli,
 			// }
-			//msg.cli.hub.broadcast <- &tmp
+			hub.broadcast <- resp
 			// log.Printf("Got message %s at point(%d, %d)", )
 		}
 	}()
 	for {
 		select {
 		case msg := <-echodata:
-			test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
+			test := &pb.Sdp{Type: msg.msg.Type, Hostid: msg.msg.PeerId, Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionID, Peerid: msg.msg.PeerId}
 			if err := stream.Send(test); err != nil {
 				log.Fatalf("Failed to send a sdp: %v", err)
 			}
 		case msg := <-offerdata:
-			test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+			test := &pb.Sdp{Type: msg.msg.Type, Hostid: msg.msg.PeerId, Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
 			if err := stream.Send(test); err != nil {
 				log.Fatalf("Failed to send a sdp: %v", err)
 			}
 
 		case msg := <-ansdata:
-			test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+			test := &pb.Sdp{Type: msg.msg.Type, Hostid: msg.msg.PeerId, Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
 			if err := stream.Send(test); err != nil {
 				log.Fatalf("Failed to send a sdp: %v", err)
 			}
 
 		case msg := <-icedata:
-			test := &pb.Sdp{Type: msg.msg.Type, Hostid: "No", Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
+			test := &pb.Sdp{Type: msg.msg.Type, Hostid: msg.msg.PeerId, Jsep: msg.msg.Jsep, Sessionid: msg.msg.SessionId, Peerid: msg.msg.PeerId}
 			if err := stream.Send(test); err != nil {
 				log.Fatalf("Failed to send a sdp: %v", err)
 			}
 		}
 	}
-}*/
+}
