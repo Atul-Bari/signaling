@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = "../protobuf";
+package samespace;
+
+service Makecall {
+    rpc inviteExchange(invite) returns(invite) {}
+    rpc biInviteExchange(stream invite) returns(stream invite) {}
+}
+
+message invite {
+    string Type=1;
+    string Host=2;
+    string Peer = 3;
+    string Jsep=4;
+    string SessionID=5;
+    bool record=6;
+}
+
