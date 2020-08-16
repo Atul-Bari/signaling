@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = "../protobuf";
+package samespace;
+
+service Mediaproto {
+    //bi directional rpc
+    rpc biCommonExchange(stream payload) returns(stream payload) {}
+}
+
+message payload {
+    string message=1;
+}
+
