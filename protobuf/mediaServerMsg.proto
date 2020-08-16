@@ -1,6 +1,5 @@
 syntax = "proto3";
 option go_package = "../protobuf";
-import "google/protobuf/any.proto";
 package samespace;
 
 service Makecall {
@@ -12,7 +11,7 @@ message invite {
     string Type=1;
     string Host=2;
     string Peer = 3;
-    map <string, google.protobuf.Any> Jsep=4;
+    string Jsep=4;
     string SessionID=5;
     bool record=6;
 }
