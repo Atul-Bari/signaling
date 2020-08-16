@@ -29,7 +29,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type CommonJson struct {
+type Payload struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -37,8 +37,8 @@ type CommonJson struct {
 	Message string `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 }
 
-func (x *CommonJson) Reset() {
-	*x = CommonJson{}
+func (x *Payload) Reset() {
+	*x = Payload{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mediaServerMsg_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -46,13 +46,13 @@ func (x *CommonJson) Reset() {
 	}
 }
 
-func (x *CommonJson) String() string {
+func (x *Payload) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CommonJson) ProtoMessage() {}
+func (*Payload) ProtoMessage() {}
 
-func (x *CommonJson) ProtoReflect() protoreflect.Message {
+func (x *Payload) ProtoReflect() protoreflect.Message {
 	mi := &file_mediaServerMsg_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -64,551 +64,14 @@ func (x *CommonJson) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CommonJson.ProtoReflect.Descriptor instead.
-func (*CommonJson) Descriptor() ([]byte, []int) {
+// Deprecated: Use Payload.ProtoReflect.Descriptor instead.
+func (*Payload) Descriptor() ([]byte, []int) {
 	return file_mediaServerMsg_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CommonJson) GetMessage() string {
+func (x *Payload) GetMessage() string {
 	if x != nil {
 		return x.Message
-	}
-	return ""
-}
-
-type Invite struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Host      string `protobuf:"bytes,2,opt,name=Host,proto3" json:"Host,omitempty"`
-	Peer      string `protobuf:"bytes,3,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	Jsep      string `protobuf:"bytes,4,opt,name=Jsep,proto3" json:"Jsep,omitempty"`
-	SessionID string `protobuf:"bytes,5,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-	Record    bool   `protobuf:"varint,6,opt,name=record,proto3" json:"record,omitempty"`
-}
-
-func (x *Invite) Reset() {
-	*x = Invite{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Invite) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Invite) ProtoMessage() {}
-
-func (x *Invite) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Invite.ProtoReflect.Descriptor instead.
-func (*Invite) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *Invite) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Invite) GetHost() string {
-	if x != nil {
-		return x.Host
-	}
-	return ""
-}
-
-func (x *Invite) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Invite) GetJsep() string {
-	if x != nil {
-		return x.Jsep
-	}
-	return ""
-}
-
-func (x *Invite) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-func (x *Invite) GetRecord() bool {
-	if x != nil {
-		return x.Record
-	}
-	return false
-}
-
-type Meeting struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Host      string `protobuf:"bytes,2,opt,name=Host,proto3" json:"Host,omitempty"`
-	Jsep      string `protobuf:"bytes,3,opt,name=Jsep,proto3" json:"Jsep,omitempty"`
-	SessionID string `protobuf:"bytes,4,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-	Record    bool   `protobuf:"varint,5,opt,name=record,proto3" json:"record,omitempty"`
-}
-
-func (x *Meeting) Reset() {
-	*x = Meeting{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Meeting) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Meeting) ProtoMessage() {}
-
-func (x *Meeting) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Meeting.ProtoReflect.Descriptor instead.
-func (*Meeting) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *Meeting) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Meeting) GetHost() string {
-	if x != nil {
-		return x.Host
-	}
-	return ""
-}
-
-func (x *Meeting) GetJsep() string {
-	if x != nil {
-		return x.Jsep
-	}
-	return ""
-}
-
-func (x *Meeting) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-func (x *Meeting) GetRecord() bool {
-	if x != nil {
-		return x.Record
-	}
-	return false
-}
-
-type Join struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Host      string `protobuf:"bytes,2,opt,name=Host,proto3" json:"Host,omitempty"`
-	Peer      string `protobuf:"bytes,3,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	Jsep      string `protobuf:"bytes,4,opt,name=Jsep,proto3" json:"Jsep,omitempty"`
-	SessionID string `protobuf:"bytes,5,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-}
-
-func (x *Join) Reset() {
-	*x = Join{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Join) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Join) ProtoMessage() {}
-
-func (x *Join) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Join.ProtoReflect.Descriptor instead.
-func (*Join) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *Join) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Join) GetHost() string {
-	if x != nil {
-		return x.Host
-	}
-	return ""
-}
-
-func (x *Join) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Join) GetJsep() string {
-	if x != nil {
-		return x.Jsep
-	}
-	return ""
-}
-
-func (x *Join) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-type Add struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Host      string `protobuf:"bytes,2,opt,name=Host,proto3" json:"Host,omitempty"`
-	Peer      string `protobuf:"bytes,3,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	SessionID string `protobuf:"bytes,4,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-}
-
-func (x *Add) Reset() {
-	*x = Add{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Add) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Add) ProtoMessage() {}
-
-func (x *Add) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Add.ProtoReflect.Descriptor instead.
-func (*Add) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *Add) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Add) GetHost() string {
-	if x != nil {
-		return x.Host
-	}
-	return ""
-}
-
-func (x *Add) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Add) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-type Terminate struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Peer      string `protobuf:"bytes,2,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	SessionID string `protobuf:"bytes,3,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-}
-
-func (x *Terminate) Reset() {
-	*x = Terminate{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Terminate) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Terminate) ProtoMessage() {}
-
-func (x *Terminate) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Terminate.ProtoReflect.Descriptor instead.
-func (*Terminate) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *Terminate) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Terminate) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Terminate) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-type Ice struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type       string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Peer       string `protobuf:"bytes,2,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	RemotePeer string `protobuf:"bytes,3,opt,name=RemotePeer,proto3" json:"RemotePeer,omitempty"`
-	SessionID  string `protobuf:"bytes,4,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-	Candidate  string `protobuf:"bytes,5,opt,name=Candidate,proto3" json:"Candidate,omitempty"`
-}
-
-func (x *Ice) Reset() {
-	*x = Ice{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Ice) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Ice) ProtoMessage() {}
-
-func (x *Ice) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Ice.ProtoReflect.Descriptor instead.
-func (*Ice) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *Ice) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Ice) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Ice) GetRemotePeer() string {
-	if x != nil {
-		return x.RemotePeer
-	}
-	return ""
-}
-
-func (x *Ice) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-func (x *Ice) GetCandidate() string {
-	if x != nil {
-		return x.Candidate
-	}
-	return ""
-}
-
-type Remotepeer struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type       string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
-	Peer       string `protobuf:"bytes,2,opt,name=Peer,proto3" json:"Peer,omitempty"`
-	RemotePeer string `protobuf:"bytes,3,opt,name=RemotePeer,proto3" json:"RemotePeer,omitempty"`
-	SessionID  string `protobuf:"bytes,4,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
-	Jsep       string `protobuf:"bytes,5,opt,name=Jsep,proto3" json:"Jsep,omitempty"`
-}
-
-func (x *Remotepeer) Reset() {
-	*x = Remotepeer{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_mediaServerMsg_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Remotepeer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Remotepeer) ProtoMessage() {}
-
-func (x *Remotepeer) ProtoReflect() protoreflect.Message {
-	mi := &file_mediaServerMsg_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Remotepeer.ProtoReflect.Descriptor instead.
-func (*Remotepeer) Descriptor() ([]byte, []int) {
-	return file_mediaServerMsg_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *Remotepeer) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *Remotepeer) GetPeer() string {
-	if x != nil {
-		return x.Peer
-	}
-	return ""
-}
-
-func (x *Remotepeer) GetRemotePeer() string {
-	if x != nil {
-		return x.RemotePeer
-	}
-	return ""
-}
-
-func (x *Remotepeer) GetSessionID() string {
-	if x != nil {
-		return x.SessionID
-	}
-	return ""
-}
-
-func (x *Remotepeer) GetJsep() string {
-	if x != nil {
-		return x.Jsep
 	}
 	return ""
 }
@@ -618,100 +81,15 @@ var File_mediaServerMsg_proto protoreflect.FileDescriptor
 var file_mediaServerMsg_proto_rawDesc = []byte{
 	0x0a, 0x14, 0x6d, 0x65, 0x64, 0x69, 0x61, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4d, 0x73, 0x67,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63,
-	0x65, 0x22, 0x26, 0x0a, 0x0a, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x4a, 0x73, 0x6f, 0x6e, 0x12,
-	0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x8e, 0x01, 0x0a, 0x06, 0x69, 0x6e,
-	0x76, 0x69, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x6f, 0x73, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04,
-	0x50, 0x65, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x50, 0x65, 0x65, 0x72,
-	0x12, 0x12, 0x0a, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x4a, 0x73, 0x65, 0x70, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49,
-	0x44, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e,
-	0x49, 0x44, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x7b, 0x0a, 0x07, 0x6d, 0x65,
-	0x65, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x6f, 0x73,
-	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a,
-	0x04, 0x4a, 0x73, 0x65, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4a, 0x73, 0x65,
-	0x70, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x12,
-	0x16, 0x0a, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x74, 0x0a, 0x04, 0x6a, 0x6f, 0x69, 0x6e, 0x12,
-	0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54,
-	0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x50, 0x65, 0x65, 0x72, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x50, 0x65, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x4a,
-	0x73, 0x65, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x12,
-	0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x22, 0x5f, 0x0a,
-	0x03, 0x61, 0x64, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x6f, 0x73, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04,
-	0x50, 0x65, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x50, 0x65, 0x65, 0x72,
-	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x22, 0x51,
-	0x0a, 0x09, 0x74, 0x65, 0x72, 0x6d, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x54,
-	0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12,
-	0x12, 0x0a, 0x04, 0x50, 0x65, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x50,
-	0x65, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49,
-	0x44, 0x22, 0x89, 0x01, 0x0a, 0x03, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70,
-	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a,
-	0x04, 0x50, 0x65, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x50, 0x65, 0x65,
-	0x72, 0x12, 0x1e, 0x0a, 0x0a, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x50, 0x65, 0x65, 0x72, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x50, 0x65, 0x65,
-	0x72, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x12,
-	0x1c, 0x0a, 0x09, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x09, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x22, 0x86, 0x01,
-	0x0a, 0x0a, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x70, 0x65, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04,
-	0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x12, 0x0a, 0x04, 0x50, 0x65, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x50, 0x65, 0x65, 0x72, 0x12, 0x1e, 0x0a, 0x0a, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x50, 0x65,
-	0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65,
-	0x50, 0x65, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49,
-	0x44, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e,
-	0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x32, 0xcc, 0x04, 0x0a, 0x08, 0x4d, 0x61, 0x6b, 0x65, 0x63,
-	0x61, 0x6c, 0x6c, 0x12, 0x38, 0x0a, 0x0e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x45, 0x78, 0x63,
-	0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63,
-	0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x1a, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73,
-	0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x22, 0x00, 0x12, 0x46, 0x0a,
-	0x10, 0x62, 0x69, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67,
-	0x65, 0x12, 0x15, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x4a, 0x73, 0x6f, 0x6e, 0x1a, 0x15, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73,
-	0x70, 0x61, 0x63, 0x65, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x4a, 0x73, 0x6f, 0x6e, 0x22,
-	0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x3e, 0x0a, 0x10, 0x62, 0x69, 0x49, 0x6e, 0x76, 0x69, 0x74,
-	0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65,
-	0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x1a, 0x11, 0x2e, 0x73,
-	0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x22,
-	0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x41, 0x0a, 0x11, 0x62, 0x69, 0x4d, 0x65, 0x65, 0x74, 0x69,
-	0x6e, 0x67, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x12, 0x2e, 0x73, 0x61, 0x6d,
-	0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6d, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x1a, 0x12,
-	0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6d, 0x65, 0x65, 0x74, 0x69,
-	0x6e, 0x67, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x38, 0x0a, 0x0e, 0x62, 0x69, 0x4a, 0x6f,
-	0x69, 0x6e, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x0f, 0x2e, 0x73, 0x61, 0x6d,
-	0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6a, 0x6f, 0x69, 0x6e, 0x1a, 0x0f, 0x2e, 0x73, 0x61,
-	0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6a, 0x6f, 0x69, 0x6e, 0x22, 0x00, 0x28, 0x01,
-	0x30, 0x01, 0x12, 0x35, 0x0a, 0x0d, 0x62, 0x69, 0x41, 0x64, 0x64, 0x45, 0x78, 0x63, 0x68, 0x61,
-	0x6e, 0x67, 0x65, 0x12, 0x0e, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e,
-	0x61, 0x64, 0x64, 0x1a, 0x0e, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e,
-	0x61, 0x64, 0x64, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x47, 0x0a, 0x13, 0x62, 0x69, 0x54,
-	0x65, 0x72, 0x6d, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65,
-	0x12, 0x14, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x74, 0x65, 0x72,
-	0x6d, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x1a, 0x14, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61,
-	0x63, 0x65, 0x2e, 0x74, 0x65, 0x72, 0x6d, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x22, 0x00, 0x28, 0x01,
-	0x30, 0x01, 0x12, 0x35, 0x0a, 0x0d, 0x62, 0x69, 0x49, 0x63, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61,
-	0x6e, 0x67, 0x65, 0x12, 0x0e, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e,
-	0x69, 0x63, 0x65, 0x1a, 0x0e, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e,
-	0x69, 0x63, 0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x4a, 0x0a, 0x14, 0x62, 0x69, 0x52,
-	0x65, 0x6d, 0x6f, 0x74, 0x65, 0x50, 0x65, 0x65, 0x72, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67,
-	0x65, 0x12, 0x15, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x72, 0x65,
-	0x6d, 0x6f, 0x74, 0x65, 0x70, 0x65, 0x65, 0x72, 0x1a, 0x15, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73,
-	0x70, 0x61, 0x63, 0x65, 0x2e, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x70, 0x65, 0x65, 0x72, 0x22,
-	0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2e, 0x2f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x22, 0x23, 0x0a, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x12, 0x18, 0x0a, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0x4e, 0x0a, 0x0a, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x12, 0x40, 0x0a, 0x10, 0x62, 0x69, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x12, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73,
+	0x70, 0x61, 0x63, 0x65, 0x2e, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x1a, 0x12, 0x2e, 0x73,
+	0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64,
+	0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2e, 0x2f, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -726,38 +104,15 @@ func file_mediaServerMsg_proto_rawDescGZIP() []byte {
 	return file_mediaServerMsg_proto_rawDescData
 }
 
-var file_mediaServerMsg_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_mediaServerMsg_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_mediaServerMsg_proto_goTypes = []interface{}{
-	(*CommonJson)(nil), // 0: samespace.commonJson
-	(*Invite)(nil),     // 1: samespace.invite
-	(*Meeting)(nil),    // 2: samespace.meeting
-	(*Join)(nil),       // 3: samespace.join
-	(*Add)(nil),        // 4: samespace.add
-	(*Terminate)(nil),  // 5: samespace.terminate
-	(*Ice)(nil),        // 6: samespace.ice
-	(*Remotepeer)(nil), // 7: samespace.remotepeer
+	(*Payload)(nil), // 0: samespace.payload
 }
 var file_mediaServerMsg_proto_depIdxs = []int32{
-	1, // 0: samespace.Makecall.inviteExchange:input_type -> samespace.invite
-	0, // 1: samespace.Makecall.biCommonExchange:input_type -> samespace.commonJson
-	1, // 2: samespace.Makecall.biInviteExchange:input_type -> samespace.invite
-	2, // 3: samespace.Makecall.biMeetingExchange:input_type -> samespace.meeting
-	3, // 4: samespace.Makecall.biJoinExchange:input_type -> samespace.join
-	4, // 5: samespace.Makecall.biAddExchange:input_type -> samespace.add
-	5, // 6: samespace.Makecall.biTerminateExchange:input_type -> samespace.terminate
-	6, // 7: samespace.Makecall.biIceExchange:input_type -> samespace.ice
-	7, // 8: samespace.Makecall.biRemotePeerExchange:input_type -> samespace.remotepeer
-	1, // 9: samespace.Makecall.inviteExchange:output_type -> samespace.invite
-	0, // 10: samespace.Makecall.biCommonExchange:output_type -> samespace.commonJson
-	1, // 11: samespace.Makecall.biInviteExchange:output_type -> samespace.invite
-	2, // 12: samespace.Makecall.biMeetingExchange:output_type -> samespace.meeting
-	3, // 13: samespace.Makecall.biJoinExchange:output_type -> samespace.join
-	4, // 14: samespace.Makecall.biAddExchange:output_type -> samespace.add
-	5, // 15: samespace.Makecall.biTerminateExchange:output_type -> samespace.terminate
-	6, // 16: samespace.Makecall.biIceExchange:output_type -> samespace.ice
-	7, // 17: samespace.Makecall.biRemotePeerExchange:output_type -> samespace.remotepeer
-	9, // [9:18] is the sub-list for method output_type
-	0, // [0:9] is the sub-list for method input_type
+	0, // 0: samespace.Mediaproto.biCommonExchange:input_type -> samespace.payload
+	0, // 1: samespace.Mediaproto.biCommonExchange:output_type -> samespace.payload
+	1, // [1:2] is the sub-list for method output_type
+	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -770,91 +125,7 @@ func file_mediaServerMsg_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_mediaServerMsg_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CommonJson); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Invite); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Meeting); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Join); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Add); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Terminate); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Ice); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_mediaServerMsg_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Remotepeer); i {
+			switch v := v.(*Payload); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -872,7 +143,7 @@ func file_mediaServerMsg_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_mediaServerMsg_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -894,618 +165,105 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// MakecallClient is the client API for Makecall service.
+// MediaprotoClient is the client API for Mediaproto service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type MakecallClient interface {
-	InviteExchange(ctx context.Context, in *Invite, opts ...grpc.CallOption) (*Invite, error)
+type MediaprotoClient interface {
 	//bi directional rpc
-	BiCommonExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiCommonExchangeClient, error)
-	BiInviteExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiInviteExchangeClient, error)
-	BiMeetingExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiMeetingExchangeClient, error)
-	BiJoinExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiJoinExchangeClient, error)
-	BiAddExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiAddExchangeClient, error)
-	BiTerminateExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiTerminateExchangeClient, error)
-	BiIceExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiIceExchangeClient, error)
-	BiRemotePeerExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiRemotePeerExchangeClient, error)
+	BiCommonExchange(ctx context.Context, opts ...grpc.CallOption) (Mediaproto_BiCommonExchangeClient, error)
 }
 
-type makecallClient struct {
+type mediaprotoClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMakecallClient(cc grpc.ClientConnInterface) MakecallClient {
-	return &makecallClient{cc}
+func NewMediaprotoClient(cc grpc.ClientConnInterface) MediaprotoClient {
+	return &mediaprotoClient{cc}
 }
 
-func (c *makecallClient) InviteExchange(ctx context.Context, in *Invite, opts ...grpc.CallOption) (*Invite, error) {
-	out := new(Invite)
-	err := c.cc.Invoke(ctx, "/samespace.Makecall/inviteExchange", in, out, opts...)
+func (c *mediaprotoClient) BiCommonExchange(ctx context.Context, opts ...grpc.CallOption) (Mediaproto_BiCommonExchangeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Mediaproto_serviceDesc.Streams[0], "/samespace.Mediaproto/biCommonExchange", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-func (c *makecallClient) BiCommonExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiCommonExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[0], "/samespace.Makecall/biCommonExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiCommonExchangeClient{stream}
+	x := &mediaprotoBiCommonExchangeClient{stream}
 	return x, nil
 }
 
-type Makecall_BiCommonExchangeClient interface {
-	Send(*CommonJson) error
-	Recv() (*CommonJson, error)
+type Mediaproto_BiCommonExchangeClient interface {
+	Send(*Payload) error
+	Recv() (*Payload, error)
 	grpc.ClientStream
 }
 
-type makecallBiCommonExchangeClient struct {
+type mediaprotoBiCommonExchangeClient struct {
 	grpc.ClientStream
 }
 
-func (x *makecallBiCommonExchangeClient) Send(m *CommonJson) error {
+func (x *mediaprotoBiCommonExchangeClient) Send(m *Payload) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *makecallBiCommonExchangeClient) Recv() (*CommonJson, error) {
-	m := new(CommonJson)
+func (x *mediaprotoBiCommonExchangeClient) Recv() (*Payload, error) {
+	m := new(Payload)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *makecallClient) BiInviteExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiInviteExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[1], "/samespace.Makecall/biInviteExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiInviteExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiInviteExchangeClient interface {
-	Send(*Invite) error
-	Recv() (*Invite, error)
-	grpc.ClientStream
-}
-
-type makecallBiInviteExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiInviteExchangeClient) Send(m *Invite) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiInviteExchangeClient) Recv() (*Invite, error) {
-	m := new(Invite)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiMeetingExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiMeetingExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[2], "/samespace.Makecall/biMeetingExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiMeetingExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiMeetingExchangeClient interface {
-	Send(*Meeting) error
-	Recv() (*Meeting, error)
-	grpc.ClientStream
-}
-
-type makecallBiMeetingExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiMeetingExchangeClient) Send(m *Meeting) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiMeetingExchangeClient) Recv() (*Meeting, error) {
-	m := new(Meeting)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiJoinExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiJoinExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[3], "/samespace.Makecall/biJoinExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiJoinExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiJoinExchangeClient interface {
-	Send(*Join) error
-	Recv() (*Join, error)
-	grpc.ClientStream
-}
-
-type makecallBiJoinExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiJoinExchangeClient) Send(m *Join) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiJoinExchangeClient) Recv() (*Join, error) {
-	m := new(Join)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiAddExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiAddExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[4], "/samespace.Makecall/biAddExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiAddExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiAddExchangeClient interface {
-	Send(*Add) error
-	Recv() (*Add, error)
-	grpc.ClientStream
-}
-
-type makecallBiAddExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiAddExchangeClient) Send(m *Add) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiAddExchangeClient) Recv() (*Add, error) {
-	m := new(Add)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiTerminateExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiTerminateExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[5], "/samespace.Makecall/biTerminateExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiTerminateExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiTerminateExchangeClient interface {
-	Send(*Terminate) error
-	Recv() (*Terminate, error)
-	grpc.ClientStream
-}
-
-type makecallBiTerminateExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiTerminateExchangeClient) Send(m *Terminate) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiTerminateExchangeClient) Recv() (*Terminate, error) {
-	m := new(Terminate)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiIceExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiIceExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[6], "/samespace.Makecall/biIceExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiIceExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiIceExchangeClient interface {
-	Send(*Ice) error
-	Recv() (*Ice, error)
-	grpc.ClientStream
-}
-
-type makecallBiIceExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiIceExchangeClient) Send(m *Ice) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiIceExchangeClient) Recv() (*Ice, error) {
-	m := new(Ice)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *makecallClient) BiRemotePeerExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiRemotePeerExchangeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[7], "/samespace.Makecall/biRemotePeerExchange", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &makecallBiRemotePeerExchangeClient{stream}
-	return x, nil
-}
-
-type Makecall_BiRemotePeerExchangeClient interface {
-	Send(*Remotepeer) error
-	Recv() (*Remotepeer, error)
-	grpc.ClientStream
-}
-
-type makecallBiRemotePeerExchangeClient struct {
-	grpc.ClientStream
-}
-
-func (x *makecallBiRemotePeerExchangeClient) Send(m *Remotepeer) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *makecallBiRemotePeerExchangeClient) Recv() (*Remotepeer, error) {
-	m := new(Remotepeer)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-// MakecallServer is the server API for Makecall service.
-type MakecallServer interface {
-	InviteExchange(context.Context, *Invite) (*Invite, error)
+// MediaprotoServer is the server API for Mediaproto service.
+type MediaprotoServer interface {
 	//bi directional rpc
-	BiCommonExchange(Makecall_BiCommonExchangeServer) error
-	BiInviteExchange(Makecall_BiInviteExchangeServer) error
-	BiMeetingExchange(Makecall_BiMeetingExchangeServer) error
-	BiJoinExchange(Makecall_BiJoinExchangeServer) error
-	BiAddExchange(Makecall_BiAddExchangeServer) error
-	BiTerminateExchange(Makecall_BiTerminateExchangeServer) error
-	BiIceExchange(Makecall_BiIceExchangeServer) error
-	BiRemotePeerExchange(Makecall_BiRemotePeerExchangeServer) error
+	BiCommonExchange(Mediaproto_BiCommonExchangeServer) error
 }
 
-// UnimplementedMakecallServer can be embedded to have forward compatible implementations.
-type UnimplementedMakecallServer struct {
+// UnimplementedMediaprotoServer can be embedded to have forward compatible implementations.
+type UnimplementedMediaprotoServer struct {
 }
 
-func (*UnimplementedMakecallServer) InviteExchange(context.Context, *Invite) (*Invite, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method InviteExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiCommonExchange(Makecall_BiCommonExchangeServer) error {
+func (*UnimplementedMediaprotoServer) BiCommonExchange(Mediaproto_BiCommonExchangeServer) error {
 	return status.Errorf(codes.Unimplemented, "method BiCommonExchange not implemented")
 }
-func (*UnimplementedMakecallServer) BiInviteExchange(Makecall_BiInviteExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiInviteExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiMeetingExchange(Makecall_BiMeetingExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiMeetingExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiJoinExchange(Makecall_BiJoinExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiJoinExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiAddExchange(Makecall_BiAddExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiAddExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiTerminateExchange(Makecall_BiTerminateExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiTerminateExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiIceExchange(Makecall_BiIceExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiIceExchange not implemented")
-}
-func (*UnimplementedMakecallServer) BiRemotePeerExchange(Makecall_BiRemotePeerExchangeServer) error {
-	return status.Errorf(codes.Unimplemented, "method BiRemotePeerExchange not implemented")
+
+func RegisterMediaprotoServer(s *grpc.Server, srv MediaprotoServer) {
+	s.RegisterService(&_Mediaproto_serviceDesc, srv)
 }
 
-func RegisterMakecallServer(s *grpc.Server, srv MakecallServer) {
-	s.RegisterService(&_Makecall_serviceDesc, srv)
+func _Mediaproto_BiCommonExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(MediaprotoServer).BiCommonExchange(&mediaprotoBiCommonExchangeServer{stream})
 }
 
-func _Makecall_InviteExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Invite)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MakecallServer).InviteExchange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/samespace.Makecall/InviteExchange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MakecallServer).InviteExchange(ctx, req.(*Invite))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Makecall_BiCommonExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiCommonExchange(&makecallBiCommonExchangeServer{stream})
-}
-
-type Makecall_BiCommonExchangeServer interface {
-	Send(*CommonJson) error
-	Recv() (*CommonJson, error)
+type Mediaproto_BiCommonExchangeServer interface {
+	Send(*Payload) error
+	Recv() (*Payload, error)
 	grpc.ServerStream
 }
 
-type makecallBiCommonExchangeServer struct {
+type mediaprotoBiCommonExchangeServer struct {
 	grpc.ServerStream
 }
 
-func (x *makecallBiCommonExchangeServer) Send(m *CommonJson) error {
+func (x *mediaprotoBiCommonExchangeServer) Send(m *Payload) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *makecallBiCommonExchangeServer) Recv() (*CommonJson, error) {
-	m := new(CommonJson)
+func (x *mediaprotoBiCommonExchangeServer) Recv() (*Payload, error) {
+	m := new(Payload)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _Makecall_BiInviteExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiInviteExchange(&makecallBiInviteExchangeServer{stream})
-}
-
-type Makecall_BiInviteExchangeServer interface {
-	Send(*Invite) error
-	Recv() (*Invite, error)
-	grpc.ServerStream
-}
-
-type makecallBiInviteExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiInviteExchangeServer) Send(m *Invite) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiInviteExchangeServer) Recv() (*Invite, error) {
-	m := new(Invite)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiMeetingExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiMeetingExchange(&makecallBiMeetingExchangeServer{stream})
-}
-
-type Makecall_BiMeetingExchangeServer interface {
-	Send(*Meeting) error
-	Recv() (*Meeting, error)
-	grpc.ServerStream
-}
-
-type makecallBiMeetingExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiMeetingExchangeServer) Send(m *Meeting) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiMeetingExchangeServer) Recv() (*Meeting, error) {
-	m := new(Meeting)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiJoinExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiJoinExchange(&makecallBiJoinExchangeServer{stream})
-}
-
-type Makecall_BiJoinExchangeServer interface {
-	Send(*Join) error
-	Recv() (*Join, error)
-	grpc.ServerStream
-}
-
-type makecallBiJoinExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiJoinExchangeServer) Send(m *Join) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiJoinExchangeServer) Recv() (*Join, error) {
-	m := new(Join)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiAddExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiAddExchange(&makecallBiAddExchangeServer{stream})
-}
-
-type Makecall_BiAddExchangeServer interface {
-	Send(*Add) error
-	Recv() (*Add, error)
-	grpc.ServerStream
-}
-
-type makecallBiAddExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiAddExchangeServer) Send(m *Add) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiAddExchangeServer) Recv() (*Add, error) {
-	m := new(Add)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiTerminateExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiTerminateExchange(&makecallBiTerminateExchangeServer{stream})
-}
-
-type Makecall_BiTerminateExchangeServer interface {
-	Send(*Terminate) error
-	Recv() (*Terminate, error)
-	grpc.ServerStream
-}
-
-type makecallBiTerminateExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiTerminateExchangeServer) Send(m *Terminate) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiTerminateExchangeServer) Recv() (*Terminate, error) {
-	m := new(Terminate)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiIceExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiIceExchange(&makecallBiIceExchangeServer{stream})
-}
-
-type Makecall_BiIceExchangeServer interface {
-	Send(*Ice) error
-	Recv() (*Ice, error)
-	grpc.ServerStream
-}
-
-type makecallBiIceExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiIceExchangeServer) Send(m *Ice) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiIceExchangeServer) Recv() (*Ice, error) {
-	m := new(Ice)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func _Makecall_BiRemotePeerExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(MakecallServer).BiRemotePeerExchange(&makecallBiRemotePeerExchangeServer{stream})
-}
-
-type Makecall_BiRemotePeerExchangeServer interface {
-	Send(*Remotepeer) error
-	Recv() (*Remotepeer, error)
-	grpc.ServerStream
-}
-
-type makecallBiRemotePeerExchangeServer struct {
-	grpc.ServerStream
-}
-
-func (x *makecallBiRemotePeerExchangeServer) Send(m *Remotepeer) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *makecallBiRemotePeerExchangeServer) Recv() (*Remotepeer, error) {
-	m := new(Remotepeer)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-var _Makecall_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "samespace.Makecall",
-	HandlerType: (*MakecallServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "inviteExchange",
-			Handler:    _Makecall_InviteExchange_Handler,
-		},
-	},
+var _Mediaproto_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "samespace.Mediaproto",
+	HandlerType: (*MediaprotoServer)(nil),
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "biCommonExchange",
-			Handler:       _Makecall_BiCommonExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biInviteExchange",
-			Handler:       _Makecall_BiInviteExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biMeetingExchange",
-			Handler:       _Makecall_BiMeetingExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biJoinExchange",
-			Handler:       _Makecall_BiJoinExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biAddExchange",
-			Handler:       _Makecall_BiAddExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biTerminateExchange",
-			Handler:       _Makecall_BiTerminateExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biIceExchange",
-			Handler:       _Makecall_BiIceExchange_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "biRemotePeerExchange",
-			Handler:       _Makecall_BiRemotePeerExchange_Handler,
+			Handler:       _Mediaproto_BiCommonExchange_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

@@ -2,76 +2,12 @@ syntax = "proto3";
 option go_package = "../protobuf";
 package samespace;
 
-service Makecall {
-    rpc inviteExchange(invite) returns(invite) {}
+service Mediaproto {
     //bi directional rpc
-    rpc biCommonExchange(stream commonJson) returns(stream commonJson) {}
-    rpc biInviteExchange(stream invite) returns(stream invite) {}
-    rpc biMeetingExchange(stream meeting) returns(stream meeting){}
-    rpc biJoinExchange(stream join) returns(stream join){}
-    rpc biAddExchange(stream add) returns(stream add){}
-    rpc biTerminateExchange(stream terminate) returns(stream terminate){}
-    rpc biIceExchange(stream ice) returns(stream ice){}
-    rpc biRemotePeerExchange(stream remotepeer) returns(stream remotepeer){}
+    rpc biCommonExchange(stream payload) returns(stream payload) {}
 }
 
-message commonJson {
+message payload {
     string message=1;
 }
-
-message invite {
-    string Type=1;
-    string Host=2;
-    string Peer = 3;
-    string Jsep=4;
-    string SessionID=5;
-    bool record=6;
-}
-
-message meeting {
-    string Type=1;
-    string Host=2;
-    string Jsep=3;
-    string SessionID=4;
-    bool record=5;
-}
-
-message join {
-    string Type=1;
-    string Host=2;
-    string Peer = 3;
-    string Jsep=4;
-    string SessionID=5;
-}
-
-message add {
-    string Type=1;
-    string Host=2;
-    string Peer = 3;
-    string SessionID=4;
-}
-
-message terminate {
-    string Type=1;
-    string Peer = 2;
-    string SessionID=3;
-}
-
-message ice {
-    string Type=1;
-    string Peer=2;
-    string RemotePeer=3;
-    string SessionID=4;
-    string Candidate=5;
-}
-
-message remotepeer {
-    string Type=1;
-    string Peer=2;
-    string RemotePeer=3;
-    string SessionID=4;
-    string Jsep=5;
-}
-
-
 
