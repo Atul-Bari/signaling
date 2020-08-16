@@ -5,6 +5,7 @@ package samespace;
 service Makecall {
     rpc inviteExchange(invite) returns(invite) {}
     rpc biInviteExchange(stream invite) returns(stream invite) {}
+    rpc biMeetingExchange(stream meeting) returns(stream meeting){}
 }
 
 message invite {
@@ -14,5 +15,13 @@ message invite {
     string Jsep=4;
     string SessionID=5;
     bool record=6;
+}
+
+message meeting {
+    string Type=1;
+    string Host=2;
+    string Jsep=3;
+    string SessionID=4;
+    bool record=5;
 }
 

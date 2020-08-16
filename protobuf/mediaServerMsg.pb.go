@@ -116,6 +116,85 @@ func (x *Invite) GetRecord() bool {
 	return false
 }
 
+type Meeting struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type      string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
+	Host      string `protobuf:"bytes,2,opt,name=Host,proto3" json:"Host,omitempty"`
+	Jsep      string `protobuf:"bytes,3,opt,name=Jsep,proto3" json:"Jsep,omitempty"`
+	SessionID string `protobuf:"bytes,4,opt,name=SessionID,proto3" json:"SessionID,omitempty"`
+	Record    bool   `protobuf:"varint,5,opt,name=record,proto3" json:"record,omitempty"`
+}
+
+func (x *Meeting) Reset() {
+	*x = Meeting{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mediaServerMsg_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Meeting) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Meeting) ProtoMessage() {}
+
+func (x *Meeting) ProtoReflect() protoreflect.Message {
+	mi := &file_mediaServerMsg_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Meeting.ProtoReflect.Descriptor instead.
+func (*Meeting) Descriptor() ([]byte, []int) {
+	return file_mediaServerMsg_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Meeting) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *Meeting) GetHost() string {
+	if x != nil {
+		return x.Host
+	}
+	return ""
+}
+
+func (x *Meeting) GetJsep() string {
+	if x != nil {
+		return x.Jsep
+	}
+	return ""
+}
+
+func (x *Meeting) GetSessionID() string {
+	if x != nil {
+		return x.SessionID
+	}
+	return ""
+}
+
+func (x *Meeting) GetRecord() bool {
+	if x != nil {
+		return x.Record
+	}
+	return false
+}
+
 var File_mediaServerMsg_proto protoreflect.FileDescriptor
 
 var file_mediaServerMsg_proto_rawDesc = []byte{
@@ -130,15 +209,27 @@ var file_mediaServerMsg_proto_rawDesc = []byte{
 	0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x09, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65,
 	0x63, 0x6f, 0x72, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f,
-	0x72, 0x64, 0x32, 0x84, 0x01, 0x0a, 0x08, 0x4d, 0x61, 0x6b, 0x65, 0x63, 0x61, 0x6c, 0x6c, 0x12,
-	0x38, 0x0a, 0x0e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67,
-	0x65, 0x12, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e,
-	0x76, 0x69, 0x74, 0x65, 0x1a, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65,
-	0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x10, 0x62, 0x69, 0x49,
-	0x6e, 0x76, 0x69, 0x74, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x11, 0x2e,
+	0x72, 0x64, 0x22, 0x7b, 0x0a, 0x07, 0x6d, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x12, 0x0a,
+	0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x6f, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x48, 0x6f, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x4a, 0x73, 0x65, 0x70, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x73,
+	0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65,
+	0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x44, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72,
+	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x32,
+	0xc7, 0x01, 0x0a, 0x08, 0x4d, 0x61, 0x6b, 0x65, 0x63, 0x61, 0x6c, 0x6c, 0x12, 0x38, 0x0a, 0x0e,
+	0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x11,
+	0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74,
+	0x65, 0x1a, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e,
+	0x76, 0x69, 0x74, 0x65, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x10, 0x62, 0x69, 0x49, 0x6e, 0x76, 0x69,
+	0x74, 0x65, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x11, 0x2e, 0x73, 0x61, 0x6d,
+	0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x1a, 0x11, 0x2e,
 	0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65,
-	0x1a, 0x11, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x69, 0x6e, 0x76,
-	0x69, 0x74, 0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2e, 0x2f,
+	0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x41, 0x0a, 0x11, 0x62, 0x69, 0x4d, 0x65, 0x65, 0x74,
+	0x69, 0x6e, 0x67, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x12, 0x2e, 0x73, 0x61,
+	0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6d, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x1a,
+	0x12, 0x2e, 0x73, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2e, 0x6d, 0x65, 0x65, 0x74,
+	0x69, 0x6e, 0x67, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2e, 0x2f,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
@@ -154,17 +245,20 @@ func file_mediaServerMsg_proto_rawDescGZIP() []byte {
 	return file_mediaServerMsg_proto_rawDescData
 }
 
-var file_mediaServerMsg_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_mediaServerMsg_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_mediaServerMsg_proto_goTypes = []interface{}{
-	(*Invite)(nil), // 0: samespace.invite
+	(*Invite)(nil),  // 0: samespace.invite
+	(*Meeting)(nil), // 1: samespace.meeting
 }
 var file_mediaServerMsg_proto_depIdxs = []int32{
 	0, // 0: samespace.Makecall.inviteExchange:input_type -> samespace.invite
 	0, // 1: samespace.Makecall.biInviteExchange:input_type -> samespace.invite
-	0, // 2: samespace.Makecall.inviteExchange:output_type -> samespace.invite
-	0, // 3: samespace.Makecall.biInviteExchange:output_type -> samespace.invite
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	1, // 2: samespace.Makecall.biMeetingExchange:input_type -> samespace.meeting
+	0, // 3: samespace.Makecall.inviteExchange:output_type -> samespace.invite
+	0, // 4: samespace.Makecall.biInviteExchange:output_type -> samespace.invite
+	1, // 5: samespace.Makecall.biMeetingExchange:output_type -> samespace.meeting
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -188,6 +282,18 @@ func file_mediaServerMsg_proto_init() {
 				return nil
 			}
 		}
+		file_mediaServerMsg_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Meeting); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -195,7 +301,7 @@ func file_mediaServerMsg_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_mediaServerMsg_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -223,6 +329,7 @@ const _ = grpc.SupportPackageIsVersion6
 type MakecallClient interface {
 	InviteExchange(ctx context.Context, in *Invite, opts ...grpc.CallOption) (*Invite, error)
 	BiInviteExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiInviteExchangeClient, error)
+	BiMeetingExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiMeetingExchangeClient, error)
 }
 
 type makecallClient struct {
@@ -273,10 +380,42 @@ func (x *makecallBiInviteExchangeClient) Recv() (*Invite, error) {
 	return m, nil
 }
 
+func (c *makecallClient) BiMeetingExchange(ctx context.Context, opts ...grpc.CallOption) (Makecall_BiMeetingExchangeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Makecall_serviceDesc.Streams[1], "/samespace.Makecall/biMeetingExchange", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &makecallBiMeetingExchangeClient{stream}
+	return x, nil
+}
+
+type Makecall_BiMeetingExchangeClient interface {
+	Send(*Meeting) error
+	Recv() (*Meeting, error)
+	grpc.ClientStream
+}
+
+type makecallBiMeetingExchangeClient struct {
+	grpc.ClientStream
+}
+
+func (x *makecallBiMeetingExchangeClient) Send(m *Meeting) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *makecallBiMeetingExchangeClient) Recv() (*Meeting, error) {
+	m := new(Meeting)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // MakecallServer is the server API for Makecall service.
 type MakecallServer interface {
 	InviteExchange(context.Context, *Invite) (*Invite, error)
 	BiInviteExchange(Makecall_BiInviteExchangeServer) error
+	BiMeetingExchange(Makecall_BiMeetingExchangeServer) error
 }
 
 // UnimplementedMakecallServer can be embedded to have forward compatible implementations.
@@ -288,6 +427,9 @@ func (*UnimplementedMakecallServer) InviteExchange(context.Context, *Invite) (*I
 }
 func (*UnimplementedMakecallServer) BiInviteExchange(Makecall_BiInviteExchangeServer) error {
 	return status.Errorf(codes.Unimplemented, "method BiInviteExchange not implemented")
+}
+func (*UnimplementedMakecallServer) BiMeetingExchange(Makecall_BiMeetingExchangeServer) error {
+	return status.Errorf(codes.Unimplemented, "method BiMeetingExchange not implemented")
 }
 
 func RegisterMakecallServer(s *grpc.Server, srv MakecallServer) {
@@ -338,6 +480,32 @@ func (x *makecallBiInviteExchangeServer) Recv() (*Invite, error) {
 	return m, nil
 }
 
+func _Makecall_BiMeetingExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(MakecallServer).BiMeetingExchange(&makecallBiMeetingExchangeServer{stream})
+}
+
+type Makecall_BiMeetingExchangeServer interface {
+	Send(*Meeting) error
+	Recv() (*Meeting, error)
+	grpc.ServerStream
+}
+
+type makecallBiMeetingExchangeServer struct {
+	grpc.ServerStream
+}
+
+func (x *makecallBiMeetingExchangeServer) Send(m *Meeting) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *makecallBiMeetingExchangeServer) Recv() (*Meeting, error) {
+	m := new(Meeting)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _Makecall_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "samespace.Makecall",
 	HandlerType: (*MakecallServer)(nil),
@@ -351,6 +519,12 @@ var _Makecall_serviceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "biInviteExchange",
 			Handler:       _Makecall_BiInviteExchange_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "biMeetingExchange",
+			Handler:       _Makecall_BiMeetingExchange_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
