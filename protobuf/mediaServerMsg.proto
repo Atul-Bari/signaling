@@ -5,6 +5,7 @@ package samespace;
 service Makecall {
     rpc inviteExchange(invite) returns(invite) {}
     //bi directional rpc
+    rpc biCommonExchange(stream commonJson) returns(stream commonJson) {}
     rpc biInviteExchange(stream invite) returns(stream invite) {}
     rpc biMeetingExchange(stream meeting) returns(stream meeting){}
     rpc biJoinExchange(stream join) returns(stream join){}
@@ -12,6 +13,10 @@ service Makecall {
     rpc biTerminateExchange(stream terminate) returns(stream terminate){}
     rpc biIceExchange(stream ice) returns(stream ice){}
     rpc biRemotePeerExchange(stream remotepeer) returns(stream remotepeer){}
+}
+
+message commonJson {
+    string message=1;
 }
 
 message invite {
@@ -67,5 +72,6 @@ message remotepeer {
     string SessionID=4;
     string Jsep=5;
 }
+
 
 
